@@ -1,74 +1,136 @@
 package com.richardpingree.servicefundamentals;
 
 import android.app.Activity;
-import android.media.MediaPlayer;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.ResultReceiver;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
-public class MainActivity extends Activity implements MediaPlayer.OnPreparedListener {
 
-    MediaPlayer player;
-    boolean mActivityResumed;
-    boolean mPrep;
-    int mPosition;
+/**
+ * Created by Richard Pingree MDF3 1503 on 3/7/15.
+ */
+public class MainActivity extends Activity implements ServiceConnection {
+
+    public static final String TAG = "MainActivity.TAG";
+
+    Button previous, stop, play, pause, next;
+    TextView songTitle;
+    ServiceClass myService;
+    ServiceClass.BoundServiceBinder binder;
+    public static final String EXTRA_RECEIVER = "EXTRA_RECEIVER";
+    public static final String DATA_RETURNED = "DATA_RETURNED";
+    public static final int RESULT_DATA_RETURNED = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        previous = (Button) findViewById(R.id.prevBtn);
+        stop = (Button) findViewById(R.id.stopBtn);
+        play = (Button) findViewById(R.id.playBtn);
+        pause = (Button) findViewById(R.id.pauseBtn);
+        next = (Button) findViewById(R.id.nextBtn);
+        songTitle = (TextView) findViewById(R.id.songTxt);
+
+        Intent intent = new Intent(this, ServiceClass.class);
+        intent.putExtra(EXTRA_RECEIVER, new DataReceiver());
+
+    }
+
+    private final Handler handler = new Handler();
+
+    public class DataReceiver extends ResultReceiver{
+        public DataReceiver(){
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if(resultData != null && resultData.containsKey(DATA_RETURNED)){
+                songTitle.setText(resultData.getString(DATA_RETURNED, "newSong"));
+            }
+        }
+    }
+
+    public void songTitle(){
+        songTitle.setText(myService.songNames[myService.mAudioPosition]);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        Intent playIntent = new Intent(this, ServiceClass.class);
+        bindService(playIntent, this, Context.BIND_AUTO_CREATE);
+        startService(playIntent);
+
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myService.onStop();
+            }
+        });
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myService.play();
+                songTitle();
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myService.player.isPlaying()){
+                    myService.onPause();
+                }else{
+                    myService.onResume();
+                }
+
+            }
+        });
+
+        previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myService.onPrev();
+                songTitle();
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myService.onNext();
+                songTitle();
+            }
+        });
+    }
+
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        binder = (ServiceClass.BoundServiceBinder)service;
+        myService = binder.getService();
+
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
+    public void onServiceDisconnected(ComponentName name) {
+        unbindService(MainActivity.this);
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onPrepared(MediaPlayer mp){
-       
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
