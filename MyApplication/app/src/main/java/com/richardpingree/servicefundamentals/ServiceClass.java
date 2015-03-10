@@ -38,11 +38,16 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
         player.reset();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     protected void onHandelIntent(Intent intent){
         ResultReceiver receiver = intent.getParcelableExtra(MainActivity.EXTRA_RECEIVER);
         Bundle result = new Bundle();
         result.putString(MainActivity.DATA_RETURNED, "newSong");
-        receiver.send(MainActivity.RESULT_DATA_RETURNED, result);
+        //receiver.send(MainActivity.RESULT_DATA_RETURNED, result);
     }
 
     public class BoundServiceBinder extends Binder{
