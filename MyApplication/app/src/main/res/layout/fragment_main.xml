@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Song Title"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Current Song"
+        android:id="@+id/songTxt"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Artist"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/songTxt"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Current Artist"
+        android:id="@+id/artistTxt"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prev"
+        android:id="@+id/prevBtn"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/artistTxt"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:id="@+id/stopBtn"
+        android:layout_alignTop="@+id/prevBtn"
+        android:layout_toEndOf="@+id/prevBtn"
+        android:layout_marginLeft="5dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play"
+        android:id="@+id/playBtn"
+        android:layout_alignBottom="@+id/stopBtn"
+        android:layout_toEndOf="@+id/stopBtn"
+        android:layout_marginLeft="5dp"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        android:id="@+id/pauseBtn"
+        android:layout_alignBottom="@+id/playBtn"
+        android:layout_toEndOf="@+id/playBtn"
+        android:layout_marginLeft="5dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/nextBtn"
+        android:layout_alignBottom="@+id/pauseBtn"
+        android:layout_toEndOf="@+id/pauseBtn"
+        android:layout_marginLeft="5dp" />
+
+</RelativeLayout>
