@@ -8,9 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.os.ResultReceiver;
 
 import java.io.IOException;
 
@@ -43,12 +41,12 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
         return super.onStartCommand(intent, flags, startId);
     }
 
-    protected void onHandelIntent(Intent intent){
-        ResultReceiver receiver = intent.getParcelableExtra(MainActivity.EXTRA_RECEIVER);
-        Bundle result = new Bundle();
-        result.putString(MainActivity.DATA_RETURNED, "newSong");
-        //receiver.send(MainActivity.RESULT_DATA_RETURNED, result);
-    }
+//    protected void onHandelIntent(Intent intent){
+//        ResultReceiver receiver = intent.getParcelableExtra(MainActivity.EXTRA_RECEIVER);
+//        Bundle result = new Bundle();
+//        result.putString(MainActivity.DATA_RETURNED, "newSong");
+//        //receiver.send(MainActivity.RESULT_DATA_RETURNED, result);
+//    }
 
     public class BoundServiceBinder extends Binder{
         public ServiceClass getService(){
@@ -73,7 +71,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
             player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
             player.prepareAsync();
             Intent intent = new Intent("newSong");
-            onHandelIntent(intent);
+            //onHandelIntent(intent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -208,7 +206,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
             try{
                 player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
                 Intent intent = new Intent("newSong");
-                onHandelIntent(intent);
+                //onHandelIntent(intent);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -224,7 +222,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
             try{
                 player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
                 Intent intent = new Intent("newSong");
-                onHandelIntent(intent);
+                //onHandelIntent(intent);
 
             } catch (IOException e) {
                 e.printStackTrace();
