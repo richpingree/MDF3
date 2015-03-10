@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * Created by Richard Pingree MDF3 1503 on 3/10/15.
@@ -20,7 +19,7 @@ public class mainFragment extends Fragment {
     private OnButtonClickListener mListener;
 
     Button previous, stop, play, pause, next;
-    TextView songTitle;
+    //TextView songTitle;
 
     public interface OnButtonClickListener{
         //public void songTitle();
@@ -64,7 +63,7 @@ public class mainFragment extends Fragment {
         play = (Button) rootView.findViewById(R.id.playBtn);
         pause = (Button) rootView.findViewById(R.id.pauseBtn);
         next = (Button) rootView.findViewById(R.id.nextBtn);
-        songTitle = (TextView) rootView.findViewById(R.id.songTxt);
+        //songTitle = (TextView) rootView.findViewById(R.id.songTxt);
 
         return rootView;
     }

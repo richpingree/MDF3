@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.ResultReceiver;
-
+import android.widget.TextView;
 
 
 /**
@@ -20,6 +18,7 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
     public static final String TAG = "MainActivity.TAG";
 
     //Button previous, stop, play, pause, next;
+    TextView songTitle, artist;
     String songTitleString;
     ServiceClass myService;
     ServiceClass.BoundServiceBinder binder;
@@ -42,30 +41,33 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
 //        play = (Button) findViewById(R.id.playBtn);
 //        pause = (Button) findViewById(R.id.pauseBtn);
 //        next = (Button) findViewById(R.id.nextBtn);
-//        songTitle = (TextView) findViewById(R.id.songTxt);
+        songTitle = (TextView) findViewById(R.id.songTxt);
+        artist = (TextView) findViewById(R.id.artistTxt);
 
-        Intent intent = new Intent(this, ServiceClass.class);
-        intent.putExtra(EXTRA_RECEIVER, new DataReceiver());
+
+//        Intent intent = new Intent(this, ServiceClass.class);
+//        intent.putExtra(EXTRA_RECEIVER, new DataReceiver());
 
     }
 
-    private final Handler handler = new Handler();
-
-    public class DataReceiver extends ResultReceiver{
-        public DataReceiver(){
-            super(handler);
-        }
-
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if(resultData != null && resultData.containsKey(DATA_RETURNED)){
-                //songTitle.setText(resultData.getString(DATA_RETURNED, "newSong"));
-            }
-        }
-    }
+//    private final Handler handler = new Handler();
+//
+//    public class DataReceiver extends ResultReceiver {
+//        public DataReceiver(){
+//            super(handler);
+//        }
+//
+//        @Override
+//        protected void onReceiveResult(int resultCode, Bundle resultData) {
+//            if(resultData != null && resultData.containsKey(DATA_RETURNED)){
+//             // songTitle.setText(resultData.getString(DATA_RETURNED, "newSong"));
+//            }
+//        }
+//    }
 
     public void songTitle(){
-        //songTitle.setText(myService.songNames[myService.mAudioPosition]);
+        songTitle.setText(myService.songNames[myService.mAudioPosition]);
+        artist.setText("Matthew Corbett & Mike Wilkie");
     }
 
     public String getSongTitle(String titleString){
@@ -140,17 +142,17 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
 
     public void clickPlay(){
         myService.play();
-        //songTitle();
+        songTitle();
     }
 
     public void clickPrev(){
         myService.onPrev();
-        //songTitle();
+        songTitle();
     }
 
     public void clickNext(){
         myService.onNext();
-        //songTitle();
+        songTitle();
     }
 
 

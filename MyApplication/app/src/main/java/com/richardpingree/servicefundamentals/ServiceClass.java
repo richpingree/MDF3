@@ -4,11 +4,14 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 
 import java.io.IOException;
 
@@ -23,6 +26,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
     int mAudioPosition;
     String[] stringArray = new String[]{"/raw/bury_the_hatchet", "/raw/crescendo", "/raw/east_is_west", "/raw/crescendo_sting", "/raw/feel_the_vibe", "/raw/freed", "/raw/i_gotta_be_strong"};
     String[] songNames = new String[]{"Bury the Hatchet", "Crescendo", "East is West", "Crescendo Sting", "Feel the Vibe", "Freed", "I gotta be Strong"};
+
     private static final int STANDARD_NOTIFICATION = 0x01001;
 
     @Override
@@ -70,7 +74,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
         try{
             player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
             player.prepareAsync();
-            Intent intent = new Intent("newSong");
+            //Intent intent = new Intent("newSong");
             //onHandelIntent(intent);
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,16 +115,30 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
         mPrepared = true;
         player.start();
 
+        Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.art1);
+        Bitmap image2 = BitmapFactory.decodeResource(getResources(), R.drawable.art2);
+        Bitmap image3 = BitmapFactory.decodeResource(getResources(), R.drawable.art3);
+        Bitmap image4 = BitmapFactory.decodeResource(getResources(), R.drawable.art4);
+        Bitmap image5 = BitmapFactory.decodeResource(getResources(), R.drawable.art5);
+        Bitmap image6 = BitmapFactory.decodeResource(getResources(), R.drawable.art6);
+        Bitmap image7 = BitmapFactory.decodeResource(getResources(), R.drawable.art7);
+        Bitmap[] bitImages = {image1, image2, image3, image4, image5, image6, image7};
+
         String currentSong = songNames[mAudioPosition];
+        Bitmap currentImage = bitImages[mAudioPosition];
         Intent notifIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notifIntent, 0);
-        Notification.Builder builder = new Notification.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         builder.setContentIntent(pendingIntent);
         builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(currentImage);
         builder.setOngoing(true);
         builder.setContentTitle("Current Song");
         builder.setContentText(currentSong);
+        builder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(currentImage));
+
+
         Notification notification = builder.build();
 
         startForeground(STANDARD_NOTIFICATION, notification);
@@ -205,7 +223,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
             player.setOnCompletionListener(ServiceClass.this);
             try{
                 player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-                Intent intent = new Intent("newSong");
+                //Intent intent = new Intent("newSong");
                 //onHandelIntent(intent);
 
             } catch (IOException e) {
