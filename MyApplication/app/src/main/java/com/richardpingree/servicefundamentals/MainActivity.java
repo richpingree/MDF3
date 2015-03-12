@@ -155,6 +155,11 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
         songTitle();
     }
 
+    public void LoopChecked(){
+        myService.Loop();
+    }
+
+
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {

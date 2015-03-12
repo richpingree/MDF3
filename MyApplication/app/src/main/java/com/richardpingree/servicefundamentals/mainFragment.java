@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 /**
  * Created by Richard Pingree MDF3 1503 on 3/10/15.
@@ -19,6 +20,7 @@ public class mainFragment extends Fragment {
     private OnButtonClickListener mListener;
 
     Button previous, stop, play, pause, next;
+    CheckBox loop;
     //TextView songTitle;
 
     public interface OnButtonClickListener{
@@ -28,7 +30,8 @@ public class mainFragment extends Fragment {
         public void clickPlay();
         public void clickPrev();
         public void clickNext();
-        public String getSongTitle(String titleString);
+        public void LoopChecked();
+        //public String getSongTitle(String titleString);
     }
 
     public mainFragment(){
@@ -63,6 +66,8 @@ public class mainFragment extends Fragment {
         play = (Button) rootView.findViewById(R.id.playBtn);
         pause = (Button) rootView.findViewById(R.id.pauseBtn);
         next = (Button) rootView.findViewById(R.id.nextBtn);
+        loop = (CheckBox) rootView.findViewById(R.id.checkBox);
+
         //songTitle = (TextView) rootView.findViewById(R.id.songTxt);
 
         return rootView;
@@ -108,6 +113,16 @@ public class mainFragment extends Fragment {
             public void onClick(View v) {
                 mListener.clickNext();
                 //mListener.songTitle();
+            }
+        });
+
+        loop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(loop.isChecked()){
+                    mListener.LoopChecked();
+                }
+
             }
         });
     }
