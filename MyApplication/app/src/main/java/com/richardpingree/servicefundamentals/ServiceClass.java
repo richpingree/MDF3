@@ -20,12 +20,10 @@ import java.io.IOException;
  */
 public class ServiceClass extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener{
 
-    MediaPlayer player;
+    public MediaPlayer player;
     boolean mActivityResumed;
     boolean mPrepared;
     int mAudioPosition;
-    int loop;
-    int notLoop;
     String[] stringArray = new String[]{"/raw/bury_the_hatchet", "/raw/crescendo", "/raw/east_is_west", "/raw/crescendo_sting", "/raw/feel_the_vibe", "/raw/freed", "/raw/i_gotta_be_strong"};
     String[] songNames = new String[]{"Bury the Hatchet", "Crescendo", "East is West", "Crescendo Sting", "Feel the Vibe", "Freed", "I gotta be Strong"};
 
@@ -36,6 +34,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
         super.onCreate();
         mAudioPosition = 0;
         player = new MediaPlayer();
+        player.setLooping(true);
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         player.setOnCompletionListener(this);
         player.setOnPreparedListener(this);
@@ -44,8 +43,11 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return super.onStartCommand(intent, flags, startId);
+
+        BoundServiceBinder mServiceBinder = new BoundServiceBinder();
+        return Service.START_STICKY;
     }
+
 
 //    protected void onHandelIntent(Intent intent){
 //        ResultReceiver receiver = intent.getParcelableExtra(MainActivity.EXTRA_RECEIVER);
@@ -65,28 +67,27 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
         return new BoundServiceBinder();
     }
 
-   protected boolean Loop(){
-       return true;
-   }
-
-   protected boolean notLoop(){
-       return false;
-   }
-    protected void looping(){
-
+    public int getMediaDuration(){
+        return player.getDuration();
     }
 
-    protected void play(){
-        player.reset();
+    public int getMediaCurPos(){
+        return player.getCurrentPosition();
+    }
+
+
+
+    public void play(){
         mAudioPosition = 0;
         player = new MediaPlayer();
+        player.setLooping(true);
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         player.setOnPreparedListener(ServiceClass.this);
         player.setOnCompletionListener(ServiceClass.this);
 
         try{
             player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-            player.setLooping(false);
+            //player.setLooping(false);
             player.prepareAsync();
 
             //Intent intent = new Intent("newSong");
@@ -128,7 +129,6 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
     @Override
      public void onPrepared(MediaPlayer mp) {
         mPrepared = true;
-        //player.setLooping(true);
         player.start();
 
         Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.art1);
@@ -161,7 +161,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
 
     }
 
-    protected void onPrev(){
+    public void onPrev(){
         if(mAudioPosition >= 1){
             mAudioPosition--;
             player.reset();
@@ -195,7 +195,7 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
         }
     }
 
-    protected void onNext(){
+    public void onNext(){
         if(mAudioPosition < stringArray.length - 1){
             mAudioPosition++;
             player.reset();
@@ -230,11 +230,11 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
     }
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if() {
             if (mAudioPosition < stringArray.length - 1) {
-                //mAudioPosition++;
+                mAudioPosition++;
                 player.reset();
                 player = new MediaPlayer();
+                player.setLooping(true);
                 player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 player.setOnPreparedListener(ServiceClass.this);
                 player.setOnCompletionListener(ServiceClass.this);
@@ -247,59 +247,6 @@ public class ServiceClass extends Service implements MediaPlayer.OnPreparedListe
                     e.printStackTrace();
                 }
                 player.prepareAsync();
-            } else {
-                if (mAudioPosition < stringArray.length - 1) {
-                    mAudioPosition++;
-                    player.reset();
-                    player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    player.setOnPreparedListener(ServiceClass.this);
-                    player.setOnCompletionListener(ServiceClass.this);
-                    try {
-                        player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-                        //Intent intent = new Intent("newSong");
-                        //onHandelIntent(intent);
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    player.prepareAsync();
-                }
             }
-//        if(mAudioPosition < stringArray.length -1){
-//            mAudioPosition++;
-//            player.reset();
-//            player = new MediaPlayer();
-//            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//            player.setOnPreparedListener(ServiceClass.this);
-//            player.setOnCompletionListener(ServiceClass.this);
-//            try{
-//                player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-//                //Intent intent = new Intent("newSong");
-//                //onHandelIntent(intent);
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            player.prepareAsync();
-//        }else{
-//            mAudioPosition = 0;
-//            player = new MediaPlayer();
-//            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//            player.setOnPreparedListener(ServiceClass.this);
-//            player.setOnCompletionListener(ServiceClass.this);
-//
-//            try{
-//                player.setDataSource(ServiceClass.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-//                //Intent intent = new Intent("newSong");
-//                //onHandelIntent(intent);
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            player.prepareAsync();
-//        }
-//    }
-        }
     }
 }

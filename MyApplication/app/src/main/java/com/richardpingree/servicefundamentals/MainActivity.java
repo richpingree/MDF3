@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 
@@ -17,11 +19,15 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
 
     public static final String TAG = "MainActivity.TAG";
 
-    //Button previous, stop, play, pause, next;
+
     TextView songTitle, artist;
     String songTitleString;
+    boolean mBound;
     ServiceClass myService;
     ServiceClass.BoundServiceBinder binder;
+    Handler durationHandler = new Handler();
+    int musicToTime, musicCurTime;
+    SeekBar seekbar;
     public static final String EXTRA_RECEIVER = "EXTRA_RECEIVER";
     public static final String DATA_RETURNED = "DATA_RETURNED";
     public static final int RESULT_DATA_RETURNED = 0;
@@ -44,11 +50,31 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
         songTitle = (TextView) findViewById(R.id.songTxt);
         artist = (TextView) findViewById(R.id.artistTxt);
 
+        seekbar = (SeekBar)findViewById(R.id.seekbar);
+
+        //seekbar.setMax((int) myService.finalTime);
+
 
 //        Intent intent = new Intent(this, ServiceClass.class);
 //        intent.putExtra(EXTRA_RECEIVER, new DataReceiver());
 
     }
+
+    Runnable updateSeek = new Runnable() {
+        @Override
+        public void run() {
+            if (mBound == true){
+
+                musicToTime = myService.getMediaDuration();
+                seekbar.setMax(musicToTime);
+                musicCurTime = myService.getMediaCurPos();
+                seekbar.setProgress(musicCurTime);
+
+            }
+            durationHandler.postDelayed(this, 1000);
+        }
+    };
+
 
 //    private final Handler handler = new Handler();
 //
@@ -142,7 +168,10 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
 
     public void clickPlay(){
         myService.play();
+        //myService.onLoop()=0;
         songTitle();
+        durationHandler.postDelayed(updateSeek, 1000);
+
     }
 
     public void clickPrev(){
@@ -156,7 +185,7 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
     }
 
     public void LoopChecked(){
-        myService.Loop();
+
     }
 
 
@@ -165,12 +194,14 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
     public void onServiceConnected(ComponentName name, IBinder service) {
         binder = (ServiceClass.BoundServiceBinder)service;
         myService = binder.getService();
+        mBound = true;
 
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
         unbindService(MainActivity.this);
+        mBound = false;
 
     }
 }
