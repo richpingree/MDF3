@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements ServiceConnection, mainFra
 
         seekbar = (SeekBar)findViewById(R.id.seekbar);
 
-        //seekbar.setMax((int) myService.finalTime);
+
 
 
 //        Intent intent = new Intent(this, ServiceClass.class);
