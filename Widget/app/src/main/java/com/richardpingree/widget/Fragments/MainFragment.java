@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.richardpingree.widget.CustomAdapter;
@@ -68,5 +69,12 @@ public class MainFragment extends Fragment{
                 mListener.viewPerson(position);
             }
         });
+    }
+
+    public void updateList() {
+        ListView peopleListView = (ListView)getView().findViewById(R.id.people_list);
+        BaseAdapter adapter = (BaseAdapter)peopleListView.getAdapter();
+        adapter.notifyDataSetChanged();
+
     }
 }

@@ -15,6 +15,11 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
 
     private final String TAG = "MainActivity";
 
+    private static final int ADDREQUEST =1;
+    public static String ADDPERSONEXTRAFIRST = "First Name";
+    public static String ADDPERSONEXTRALAST = "Last Name";
+    public static String ADDPERSONEXTRAEMAIL = "Email Address";
+
     private ArrayList<Person> mPeopleDataList;
 
     @Override
@@ -32,6 +37,25 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK && requestCode == ADDREQUEST){
+            Person newPerson = new Person();
+
+            newPerson.mFirst = data.getStringExtra(ADDPERSONEXTRAFIRST);
+            newPerson.mLast = data.getStringExtra(ADDPERSONEXTRALAST);
+            newPerson.mEmail = data.getStringExtra(ADDPERSONEXTRAEMAIL);
+
+            mPeopleDataList.add(newPerson);
+            MainFragment mf = (MainFragment)getFragmentManager().findFragmentById(R.id.container);
+            try{
+                mf.updateList();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
     public ArrayList<Person> getPeople(){
         return mPeopleDataList;
     }
@@ -41,6 +65,11 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
         Intent detailIntent = new Intent(this, DetailActivity.class);
         detailIntent.putExtra(DetailActivity.PERSONEXTRA, mPeopleDataList.get(position));
         startActivity(detailIntent);
+    }
+
+    public void addPerson(){
+        Intent addIntent = new Intent(this, FormActivity.class);
+        startActivityForResult(addIntent, ADDREQUEST);
     }
 
 
@@ -53,14 +82,12 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_add) {
-            return true;
+        switch(item.getItemId()){
+            case R.id.action_add:
+                addPerson();
+                break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
