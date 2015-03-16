@@ -3,6 +3,8 @@ package com.richardpingree.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.richardpingree.widget.Fragments.FormFragment;
 
@@ -33,5 +35,17 @@ public class FormActivity extends Activity implements FormFragment.FormListener 
         returnIntent.putExtra(MainActivity.ADDPERSONEXTRAEMAIL, newPerson.mEmail);
         setResult(RESULT_OK, returnIntent);
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_form, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
