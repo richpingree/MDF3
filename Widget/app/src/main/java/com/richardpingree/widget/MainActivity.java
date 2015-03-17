@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.richardpingree.widget.Fragments.MainFragment;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
@@ -70,6 +71,10 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
     public void addPerson(){
         Intent addIntent = new Intent(this, FormActivity.class);
         startActivityForResult(addIntent, ADDREQUEST);
+    }
+
+    public void createFile(){
+        FileOutputStream fos = 
     }
 
 
