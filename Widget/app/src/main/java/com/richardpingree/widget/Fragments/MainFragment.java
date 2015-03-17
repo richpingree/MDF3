@@ -22,6 +22,7 @@ import java.util.ArrayList;
  */
 public class MainFragment extends Fragment{
 
+    private static final Object MAP_OF_PEOPLE = "People";
     private final String TAG = "MainFragment";
 
     private PersonListener mListener;
@@ -77,4 +78,18 @@ public class MainFragment extends Fragment{
         adapter.notifyDataSetChanged();
 
     }
+
+//    public void createFile() throws IOException{
+//        FileOutputStream fos = getActivity().openFileOutput("savedfile", Context.MODE_PRIVATE);
+//        ObjectOutputStream oos = new ObjectOutputStream(fos);
+//        oos.writeObject(MAP_OF_PEOPLE);
+//        oos.close();
+//        fos.close();
+//    }
+//
+//    public void readFile() throws IOException{
+//        FileInputStream fis = getActivity().openFileInput("savedfile");
+//        ObjectInputStream ois = new ObjectInputStream(fis);
+//
+//    }
 }

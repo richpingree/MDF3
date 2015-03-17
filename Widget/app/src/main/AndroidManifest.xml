@@ -24,6 +24,19 @@
         <activity
             android:name=".FormActivity">
         </activity>
+
+        <receiver android:name=".CollectionWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.richpingree.android.ACTION_VIEW_DETAILS"/>
+            </intent-filter>
+
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/collection_appwidget_info"/>
+        </receiver>
+
+        <service android:name=".CollectionWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

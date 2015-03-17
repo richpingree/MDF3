@@ -1,6 +1,7 @@
 package com.richardpingree.widget;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,14 +9,20 @@ import android.view.MenuItem;
 
 import com.richardpingree.widget.Fragments.MainFragment;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 
 public class MainActivity extends Activity implements MainFragment.PersonListener{
 
+
     private final String TAG = "MainActivity";
 
+    private static final Object MAP_OF_PEOPLE = "Person";
     private static final int ADDREQUEST =1;
     public static String ADDPERSONEXTRAFIRST = "First Name";
     public static String ADDPERSONEXTRALAST = "Last Name";
@@ -73,8 +80,18 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
         startActivityForResult(addIntent, ADDREQUEST);
     }
 
-    public void createFile(){
-        FileOutputStream fos = 
+    public void createFile() throws IOException {
+        FileOutputStream fos = this.openFileOutput("savedfile", Context.MODE_PRIVATE);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(MAP_OF_PEOPLE);
+        oos.close();
+        fos.close();
+    }
+
+    public void readFile() throws IOException{
+        FileInputStream fis = this.openFileInput("savedfile");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
     }
 
 
