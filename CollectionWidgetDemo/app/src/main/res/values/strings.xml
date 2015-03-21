@@ -4,8 +4,8 @@
     <string name="app_name">Collection Widget Demo</string>
     
     <string name="empty">No data</string>
-    <string name="title">Title:</string>
-    <string name="author">Author:</string>
-    <string name="date">Date:</string>
+    <string name="title">First Name:</string>
+    <string name="author">Last Name:</string>
+    <string name="date">Email Address:</string>
 
 </resources>

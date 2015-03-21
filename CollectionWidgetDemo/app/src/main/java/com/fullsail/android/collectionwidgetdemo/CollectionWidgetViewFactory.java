@@ -11,30 +11,32 @@ public class CollectionWidgetViewFactory implements RemoteViewsFactory {
 	
 	private static final int ID_CONSTANT = 0x0101010;
 	
-	private ArrayList<NewsArticle> mArticles;
+	private ArrayList<Person> mPersons;
 	private Context mContext;
 	
 	public CollectionWidgetViewFactory(Context context) {
 		mContext = context;
-		mArticles = new ArrayList<NewsArticle>();
+		mPersons = new ArrayList<Person>();
 	}
 
 	@Override
 	public void onCreate() {
-		String[] titles = { "New Phones Released!", "Random App Makes $300 Million", 
-				"Google Glass Robots", "Arduino Used in Mobile", "Orioles Win World Series" };
-		String[] authors = { "Phone Scoop", "Yahoo Marketing Department", "Cyborg Alliance",
-				"Some Open Source Person", "Roch Kubatko" };
-		String[] dates = { "Everyday", "June 20, 2012", "September 10, 2014", "August 9, 2014", "November 10, 2014" };
-		
-		for(int i = 0; i < 5; i++) {
-			mArticles.add(new NewsArticle(titles[i], authors[i], dates[i]));
-		}
+        mPersons.add(new Person("Richard", "Pingree", "richpingree@email.com"));
+
+//		String[] titles = { "New Phones Released!", "Random App Makes $300 Million",
+//				"Google Glass Robots", "Arduino Used in Mobile", "Orioles Win World Series" };
+//		String[] authors = { "Phone Scoop", "Yahoo Marketing Department", "Cyborg Alliance",
+//				"Some Open Source Person", "Roch Kubatko" };
+//		String[] dates = { "Everyday", "June 20, 2012", "September 10, 2014", "August 9, 2014", "November 10, 2014" };
+//
+//		for(int i = 0; i < 5; i++) {
+//			mPersons.add(new Person(titles[i], authors[i], dates[i]));
+//		}
 	}
 
 	@Override
 	public int getCount() {
-		return mArticles.size();
+		return mPersons.size();
 	}
 
 	@Override
@@ -50,13 +52,13 @@ public class CollectionWidgetViewFactory implements RemoteViewsFactory {
 	@Override
 	public RemoteViews getViewAt(int position) {
 		
-		NewsArticle article = mArticles.get(position);
+		Person article = mPersons.get(position);
 		
 		RemoteViews itemView = new RemoteViews(mContext.getPackageName(), R.layout.article_item);
 		
-		itemView.setTextViewText(R.id.title, article.getTitle());
-		itemView.setTextViewText(R.id.author, article.getAuthor());
-		itemView.setTextViewText(R.id.date, article.getDate());
+		itemView.setTextViewText(R.id.firstTxt, article.getFirst());
+		itemView.setTextViewText(R.id.lastTxt, article.getLast());
+		itemView.setTextViewText(R.id.emailTxt, article.getEmail());
 		
 		Intent intent = new Intent();
 		intent.putExtra(CollectionWidgetProvider.EXTRA_ITEM, article);
@@ -83,7 +85,7 @@ public class CollectionWidgetViewFactory implements RemoteViewsFactory {
 
 	@Override
 	public void onDestroy() {
-		mArticles.clear();
+		mPersons.clear();
 	}
 	
 }

@@ -46,7 +46,7 @@ public class CollectionWidgetProvider extends AppWidgetProvider {
 	public void onReceive(Context context, Intent intent) {
 		
 		if(intent.getAction().equals(ACTION_VIEW_DETAILS)) {
-			NewsArticle article = (NewsArticle)intent.getSerializableExtra(EXTRA_ITEM);
+			Person article = (Person)intent.getSerializableExtra(EXTRA_ITEM);
 			if(article != null) {
 				Intent details = new Intent(context, DetailsActivity.class);
 				details.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow android:padding="10dp">
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:hint="Enter First Name"
+                android:id="@+id/firstText"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:hint="Enter Last Name"
+                android:id="@+id/lastText"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+            <EditText
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:hint="Enter Email Address"
+                android:id="@+id/emailText"/>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
