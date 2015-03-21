@@ -16,7 +16,7 @@ import com.richardpingree.widget.Person;
 import com.richardpingree.widget.R;
 
 /**
- * Created by richardpingree on 3/15/15.
+ * Created by Richard Pingree MDF3 1503 Week3 on 3/15/15.
  */
 public class FormFragment extends Fragment {
 
@@ -77,6 +77,7 @@ public class FormFragment extends Fragment {
                 newPerson.mFirst = first.getText().toString();
                 newPerson.mLast = last.getText().toString();
                 newPerson.mEmail = email.getText().toString();
+
 
                 mListener.addEntry(newPerson);
                 break;

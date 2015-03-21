@@ -7,9 +7,10 @@ import android.os.Bundle;
 import com.richardpingree.widget.Fragments.DetailFragment;
 
 /**
- * Created by richardpingree on 3/15/15.
+ * Created by Richard Pingree MDF3 1503 Week3 on 3/15/15.
  */
 public class DetailActivity extends Activity implements DetailFragment.DetailListener {
+
 
     private final String TAG = "DetailActivity";
 

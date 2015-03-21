@@ -18,7 +18,7 @@ import com.richardpingree.widget.R;
 import java.util.ArrayList;
 
 /**
- * Created by richardpingree on 3/14/15.
+ * Created by Richard Pingree MDF3 1503 Week3 on 3/14/15.
  */
 public class MainFragment extends Fragment{
 
@@ -79,17 +79,4 @@ public class MainFragment extends Fragment{
 
     }
 
-//    public void createFile() throws IOException{
-//        FileOutputStream fos = getActivity().openFileOutput("savedfile", Context.MODE_PRIVATE);
-//        ObjectOutputStream oos = new ObjectOutputStream(fos);
-//        oos.writeObject(MAP_OF_PEOPLE);
-//        oos.close();
-//        fos.close();
-//    }
-//
-//    public void readFile() throws IOException{
-//        FileInputStream fis = getActivity().openFileInput("savedfile");
-//        ObjectInputStream ois = new ObjectInputStream(fis);
-//
-//    }
 }

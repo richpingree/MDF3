@@ -28,7 +28,8 @@
         <receiver android:name=".CollectionWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="com.richpingree.android.ACTION_VIEW_DETAILS"/>
+                <action android:name="com.richardpingree.widget.ACTION_VIEW_DETAILS"/>
+                <action android:name="com.richardpingree.widget.ACTION_CREATE"/>
             </intent-filter>
 
             <meta-data android:name="android.appwidget.provider"

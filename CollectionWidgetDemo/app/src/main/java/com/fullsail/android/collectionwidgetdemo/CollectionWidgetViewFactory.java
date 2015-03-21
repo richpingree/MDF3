@@ -1,11 +1,11 @@
 package com.fullsail.android.collectionwidgetdemo;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
+
+import java.util.ArrayList;
 
 public class CollectionWidgetViewFactory implements RemoteViewsFactory {
 	

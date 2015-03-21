@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.richardpingree.widget.Fragments.FormFragment;
 
 /**
- * Created by richardpingree on 3/15/15.
+ * Created by Richard Pingree MDF3 1503 Week3 on 3/15/15.
  */
 public class FormActivity extends Activity implements FormFragment.FormListener {
 
@@ -35,6 +35,7 @@ public class FormActivity extends Activity implements FormFragment.FormListener 
         returnIntent.putExtra(MainActivity.ADDPERSONEXTRAEMAIL, newPerson.mEmail);
         setResult(RESULT_OK, returnIntent);
         finish();
+
     }
 
     @Override

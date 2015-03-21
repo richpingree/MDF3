@@ -1,7 +1,6 @@
 package com.richardpingree.widget;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,14 +8,11 @@ import android.view.MenuItem;
 
 import com.richardpingree.widget.Fragments.MainFragment;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-
+/**
+ * Created by Richard Pingree MDF3 1503 Week3 on 3/14/15.
+ */
 public class MainActivity extends Activity implements MainFragment.PersonListener{
 
 
@@ -28,6 +24,7 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
     public static String ADDPERSONEXTRALAST = "Last Name";
     public static String ADDPERSONEXTRAEMAIL = "Email Address";
 
+    private Person newPerson;
     private ArrayList<Person> mPeopleDataList;
 
     @Override
@@ -39,6 +36,7 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
         }
 
         mPeopleDataList = new ArrayList<Person>();
+        //test data
         mPeopleDataList.add(new Person("John", "Smith", "johnsmith@email.com"));
         mPeopleDataList.add(new Person("Rich", "Pingree", "richpingree@email.com"));
 
@@ -47,13 +45,15 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK && requestCode == ADDREQUEST){
-            Person newPerson = new Person();
+            newPerson = new Person();
 
             newPerson.mFirst = data.getStringExtra(ADDPERSONEXTRAFIRST);
             newPerson.mLast = data.getStringExtra(ADDPERSONEXTRALAST);
             newPerson.mEmail = data.getStringExtra(ADDPERSONEXTRAEMAIL);
 
             mPeopleDataList.add(newPerson);
+            //PersonUtility.saveFile(this, newPerson);
+
             MainFragment mf = (MainFragment)getFragmentManager().findFragmentById(R.id.container);
             try{
                 mf.updateList();
@@ -80,19 +80,6 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
         startActivityForResult(addIntent, ADDREQUEST);
     }
 
-    public void createFile() throws IOException {
-        FileOutputStream fos = this.openFileOutput("savedfile", Context.MODE_PRIVATE);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(MAP_OF_PEOPLE);
-        oos.close();
-        fos.close();
-    }
-
-    public void readFile() throws IOException{
-        FileInputStream fis = this.openFileInput("savedfile");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-
-    }
 
 
     @Override
