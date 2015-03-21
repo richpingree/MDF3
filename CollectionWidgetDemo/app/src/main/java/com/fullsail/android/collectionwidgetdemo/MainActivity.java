@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
         toWidget.putExtra("personList", getPersons());
         sendBroadcast(toWidget);
 
-        //PersonUtility.saveFile(this, newPerson);
+        PersonUtility.saveFile(this, newPerson);
     }
 
     @Override
