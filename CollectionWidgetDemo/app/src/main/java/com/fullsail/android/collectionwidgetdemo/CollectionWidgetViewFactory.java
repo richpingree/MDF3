@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class CollectionWidgetViewFactory implements RemoteViewsFactory {
 	
 	private static final int ID_CONSTANT = 0x0101010;
-	
-	private ArrayList<Person> mPersons;
+    public static final String EXTRA = "com.fullsail.android.CollectionWidgetViewFactory.EXTRA";
+
+    private ArrayList<Person> mPersons;
 	private Context mContext;
 	
 	public CollectionWidgetViewFactory(Context context) {

@@ -37,11 +37,9 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
         mPersonDataList.add(new Person("John", "Smith", "johnsmith@email.com"));
         mPersonDataList.add(new Person("Rich", "Pingree", "richpingree@email.com"));
 
-        Intent toWidget = new Intent(this, CollectionWidgetViewFactory.class);
-        toWidget.putExtra("personList", getPersons());
-        sendBroadcast(toWidget);
+        toWidget();
 
-        PersonUtility.saveFile(this, newPerson);
+//        PersonUtility.saveFile(this, newPerson);
     }
 
     @Override
@@ -80,6 +78,12 @@ public class MainActivity extends Activity implements MainFragment.PersonListene
     public void addPerson(){
         Intent addIntent = new Intent(this, FormActivity.class);
         startActivityForResult(addIntent, ADD_REQUEST);
+    }
+
+    public void toWidget(){
+        Intent widgetIntent = new Intent(this, CollectionWidgetViewFactory.class);
+        widgetIntent.putExtra(CollectionWidgetViewFactory.EXTRA, getPersons());
+        sendBroadcast(widgetIntent);
     }
 
     @Override
