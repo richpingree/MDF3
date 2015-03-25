@@ -1,30 +1,30 @@
-package fragments;
+package com.richardpingree.mappingphotos.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fullsail.android.collectionwidgetdemo.Person;
-import com.fullsail.android.collectionwidgetdemo.R;
+import com.richardpingree.mappingphotos.R;
 
 /**
- * Created by Richard Pingree MDF3 1503 Week i on 3/21/15.
+ * Created by Richard Pingree MDF3 1503 Week 4 on 3/25/15.
  */
-public class DetailFragment extends Fragment {
+public class DetailsFragment extends Fragment {
 
     private final String TAG = "DetailFragment";
 
     private DetailListener mListener;
 
     public interface DetailListener{
-        public Person getPerson();
+        public String getMarkerTitle();
     }
 
-    public DetailFragment(){
+    public DetailsFragment(){
 
     }
 
@@ -34,15 +34,15 @@ public class DetailFragment extends Fragment {
 
         if(activity instanceof DetailListener){
             mListener = (DetailListener)activity;
-        }else {
+        }else{
             throw new IllegalArgumentException("Containing activity must implement DetaiListener interface");
         }
-
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_details, container, false);
         return rootView;
     }
 
@@ -50,13 +50,8 @@ public class DetailFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        TextView tv = (TextView)getView().findViewById(R.id.firstTxt);
-		tv.setText(mListener.getPerson().getFirst());
+        TextView tv = (TextView)getView().findViewById(R.id.textView1);
+        tv.setText(mListener.getMarkerTitle());
 
-		tv = (TextView)getView().findViewById(R.id.lastTxt);
-		tv.setText(mListener.getPerson().getLast());
-
-		tv = (TextView)getView().findViewById(R.id.emailTxt);
-		tv.setText(mListener.getPerson().getEmail());
     }
 }

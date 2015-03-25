@@ -7,7 +7,9 @@ import android.view.MenuItem;
 
 import com.richardpingree.mappingphotos.fragments.MyMapFragment;
 
-
+/**
+ * Created by Richard Pingree MDF3 1503 Week 4 on 3/24/15.
+ */
 public class MainActivity extends Activity {
 
     @Override
@@ -35,7 +37,7 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
             return true;
         }
 
