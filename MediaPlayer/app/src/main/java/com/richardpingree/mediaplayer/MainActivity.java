@@ -2,17 +2,24 @@ package com.richardpingree.mediaplayer;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 /**
  * Created by Richard Pingree MDF3 1504 Week 1 on 3/31/15.
  */
-public class MainActivity extends Activity implements ServiceConnection{
+public class MainActivity extends Activity implements ServiceConnection, MainFragment.OnButtonClickListener{
 
+    public static final String TAG = "MainActivity.TAG";
+
+    TextView songTitle, artist;
+    String songTitleString;
     boolean mBound;
     MyService mySevice;
     MyService.BoundServiceBinder binder;
@@ -21,8 +28,26 @@ public class MainActivity extends Activity implements ServiceConnection{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
+
+        songTitle = (TextView) findViewById(R.id.songTxt);
+        artist = (TextView) findViewById(R.id.artistTxt);
     }
 
+    public void songTitle(){
+        songTitle.setText(mySevice.songNames[mySevice.mAudioPosition]);
+        artist.setText("Matthew Corbett & Mike Wilkie");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent playIntent = new Intent(this, MyService.class);
+        bindService(playIntent, this, Context.BIND_AUTO_CREATE);
+        startService(playIntent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,5 +82,37 @@ public class MainActivity extends Activity implements ServiceConnection{
     public void onServiceDisconnected(ComponentName name) {
         unbindService(MainActivity.this);
         mBound = false;
+    }
+
+    @Override
+    public void clickStop() {
+        mySevice.onStop();
+    }
+
+    @Override
+    public void clickPause() {
+        if(mySevice.player.isPlaying()){
+            mySevice.onPause();
+        }else{
+            mySevice.onResume();
+        }
+    }
+
+    @Override
+    public void clickPlay() {
+        mySevice.play();
+        songTitle();
+    }
+
+    @Override
+    public void clickPrev() {
+        mySevice.onPrev();
+        songTitle();
+    }
+
+    @Override
+    public void clickNext() {
+        mySevice.onNext();
+        songTitle();
     }
 }
