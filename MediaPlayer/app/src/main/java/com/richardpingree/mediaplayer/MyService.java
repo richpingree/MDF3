@@ -20,7 +20,7 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
     public MediaPlayer player;
     boolean mActivityResumed;
     boolean mPrepared;
-    int mAudioPosition;
+    int mAudioPosition = 0;
     String[] stringArray = new String[]{"/raw/bury_the_hatchet", "/raw/crescendo", "/raw/east_is_west", "/raw/feel_the_vibe", "/raw/freed", "/raw/i_gotta_be_strong"};
     String[] songNames = new String[]{"Bury the Hatchet", "Crescendo", "East is West", "Feel the Vibe", "Freed", "I Gotta be Strong"};
 
@@ -37,19 +37,24 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         return new BoundServiceBinder();
     }
 
-    public void play(){
-        mAudioPosition = 0;
-        player = new MediaPlayer();
+    public void playerSetup(){
+
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
         player.setOnPreparedListener(MyService.this);
         player.setOnCompletionListener(MyService.this);
 
         try{
             player.setDataSource(MyService.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-            player.prepareAsync();
-        }catch (IOException e){
+        }catch(IOException e){
             e.printStackTrace();
         }
+        player.prepareAsync();
+
+    }
+    public void play(){
+        player = new MediaPlayer();
+        playerSetup();
+
     }
 
     public void onPause(){
@@ -101,21 +106,14 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         startForeground(STANDARD_NOTIFICATION, notification);
     }
 
+
+
     public void onPrev(){
         if(mAudioPosition >= 1){
             mAudioPosition--;
             player.reset();
-            player = new MediaPlayer();
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setOnPreparedListener(MyService.this);
-            player.setOnCompletionListener(MyService.this);
+            playerSetup();
 
-            try{
-                player.setDataSource(MyService.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-            player.prepareAsync();
         }
     }
 
@@ -123,17 +121,8 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         if(mAudioPosition < stringArray.length - 1){
             mAudioPosition++;
             player.reset();
-            player = new MediaPlayer();
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setOnPreparedListener(MyService.this);
-            player.setOnCompletionListener(MyService.this);
+            playerSetup();
 
-            try{
-                player.setDataSource(MyService.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-            player.prepareAsync();
         }
     }
 
@@ -142,16 +131,7 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         if(mAudioPosition < stringArray.length - 1){
             mAudioPosition++;
             player.reset();
-            player = new MediaPlayer();
-            player. setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setOnPreparedListener(MyService.this);
-            player.setOnCompletionListener(MyService.this);
-            try{
-                player.setDataSource(MyService.this, Uri.parse("android.resource://" + getPackageName() + stringArray[mAudioPosition]));
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-            player.prepareAsync();
+            playerSetup();
         }
     }
 
