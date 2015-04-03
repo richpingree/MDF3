@@ -85,8 +85,8 @@ public class MainFragment extends Fragment {
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pause.setEnabled(false);
-                play.setEnabled(true);
+                pause.setEnabled(true);
+                play.setEnabled(false);
                 mListener.clickPause();
             }
         });

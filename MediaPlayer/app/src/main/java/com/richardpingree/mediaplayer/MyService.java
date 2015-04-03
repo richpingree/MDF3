@@ -64,7 +64,7 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
     public void onResume(){
         mActivityResumed = true;
 
-        if(player != null && mPrepared){
+        if(player != null && !mPrepared){
             player.prepareAsync();
         }else if (player != null && mPrepared){
             player.start();
