@@ -9,17 +9,15 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 /**
  * Created by Richard Pingree MDF3 1504 Week 1 on 3/31/15.
  */
-public class MainActivity extends Activity implements ServiceConnection, MainFragment.OnButtonClickListener{
+public class MainActivity extends Activity implements ServiceConnection, MainFragment.OnButtonClickListener, InfoFragment.InfoListener{
 
     public static final String TAG = "MainActivity.TAG";
 
-    TextView songTitle, artist;
-    String songTitleString;
+
     boolean mBound;
     MyService mySevice;
     MyService.BoundServiceBinder binder;
@@ -31,13 +29,19 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
 
         getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
 
-        songTitle = (TextView) findViewById(R.id.songTxt);
-        artist = (TextView) findViewById(R.id.artistTxt);
+
+
+
     }
 
-    public void songTitle(){
-        songTitle.setText(mySevice.songNames[mySevice.mAudioPosition]);
-        artist.setText("Matthew Corbett & Mike Wilkie");
+    @Override
+    public String currentSongTitle() {
+        String sTitle = mySevice.songNames[mySevice.mAudioPosition];
+        return sTitle;
+    }
+
+    public void setSongInfo(){
+        getFragmentManager().beginTransaction().replace(R.id.container1, new InfoFragment()).commit();
     }
 
     @Override
@@ -101,18 +105,21 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
     @Override
     public void clickPlay() {
         mySevice.play();
-        songTitle();
+        setSongInfo();
+
     }
 
     @Override
     public void clickPrev() {
         mySevice.onPrev();
-        songTitle();
+        setSongInfo();
     }
 
     @Override
     public void clickNext() {
         mySevice.onNext();
-        songTitle();
+        setSongInfo();
     }
+
+
 }
