@@ -37,6 +37,12 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         return new BoundServiceBinder();
     }
 
+    public class BoundServiceBinder extends Binder{
+        public MyService getService(){
+            return MyService.this;
+        }
+    }
+
     public void playerSetup(){
 
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -136,9 +142,5 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
     }
 
 
-    public class BoundServiceBinder extends Binder{
-        public MyService getService(){
-            return MyService.this;
-        }
-    }
+
 }

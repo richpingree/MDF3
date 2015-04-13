@@ -49,6 +49,10 @@ public class InfoFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        if(songTitle == null){
+//            songTitle.setText(mListener.currentSongTitle());
+//            artist.setText("Matthew Corbett & Mike Wilkie");
+//        }
 
         songTitle.setText(mListener.currentSongTitle());
         artist.setText("Matthew Corbett & Mike Wilkie");

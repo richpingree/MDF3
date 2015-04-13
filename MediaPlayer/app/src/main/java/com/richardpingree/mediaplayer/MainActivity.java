@@ -21,6 +21,7 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
     boolean mBound;
     MyService mySevice;
     MyService.BoundServiceBinder binder;
+    Intent playIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,10 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
         setContentView(R.layout.activity_main);
 
         getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
-
+//        if (savedInstanceState == null){
+//
+//            setSongInfo();
+//        }
 
 
 
@@ -48,7 +52,7 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
     protected void onStart() {
         super.onStart();
 
-        Intent playIntent = new Intent(this, MyService.class);
+        playIntent = new Intent(this, MyService.class);
         bindService(playIntent, this, Context.BIND_AUTO_CREATE);
         startService(playIntent);
     }
@@ -75,13 +79,16 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
         return super.onOptionsItemSelected(item);
     }
 
+    //Service connected
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
+        mBound = true;
         binder =(MyService.BoundServiceBinder)service;
         mySevice = binder.getService();
-        mBound = true;
+
     }
 
+    //Service Disconnected
     @Override
     public void onServiceDisconnected(ComponentName name) {
         unbindService(MainActivity.this);
@@ -104,21 +111,26 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
 
     @Override
     public void clickPlay() {
-        mySevice.play();
-        setSongInfo();
-
+        if(mBound == true) {
+            mySevice.play();
+            setSongInfo();
+        }
     }
 
     @Override
     public void clickPrev() {
-        mySevice.onPrev();
-        setSongInfo();
+        if(mBound == true) {
+            mySevice.onPrev();
+            setSongInfo();
+        }
     }
 
     @Override
     public void clickNext() {
-        mySevice.onNext();
-        setSongInfo();
+        if(mBound == true) {
+            mySevice.onNext();
+            setSongInfo();
+        }
     }
 
 
