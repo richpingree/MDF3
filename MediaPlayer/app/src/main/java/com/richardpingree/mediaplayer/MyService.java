@@ -4,6 +4,8 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -23,6 +25,7 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
     int mAudioPosition = 0;
     String[] stringArray = new String[]{"/raw/bury_the_hatchet", "/raw/crescendo", "/raw/east_is_west", "/raw/feel_the_vibe", "/raw/freed", "/raw/i_gotta_be_strong"};
     String[] songNames = new String[]{"Bury the Hatchet", "Crescendo", "East is West", "Feel the Vibe", "Freed", "I Gotta be Strong"};
+    int[] imageNames = new int[]{R.drawable.art1,R.drawable.art2,R.drawable.art3,R.drawable.art4,R.drawable.art5,R.drawable.art6};
 
     private static final int STANDARD_NOTIFICATION = 0x00001;
 
@@ -97,13 +100,17 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         mPrepared = true;
         player.start();
 
+
+
         String currentSong = songNames[mAudioPosition];
+        Bitmap currentimage = BitmapFactory.decodeResource(getResources(), imageNames[mAudioPosition]);
         Intent nIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, nIntent, 0);
         Notification.Builder builder = new Notification.Builder(this);
 
         builder.setContentIntent(pendingIntent);
         builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(currentimage);
         builder.setOngoing(true);
         builder.setContentTitle("Current Song");
         builder.setContentText(currentSong);
