@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -42,5 +42,21 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"/>
 
+    <SeekBar
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:layout_below="@+id/artistTxt"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_marginTop="5dp" />
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:layout_alignBottom="@+id/artistTxt"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="46dp" />
+
+
+</RelativeLayout>

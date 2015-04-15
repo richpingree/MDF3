@@ -44,6 +44,13 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
         return sTitle;
     }
 
+    @Override
+    public int currentAlbumImage() {
+        int currentAlbum = mySevice.imageNames[mySevice.mAudioPosition];
+        return currentAlbum;
+    }
+
+
     public void setSongInfo(){
         getFragmentManager().beginTransaction().replace(R.id.container1, new InfoFragment()).commit();
     }

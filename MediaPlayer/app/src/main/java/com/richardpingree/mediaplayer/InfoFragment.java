@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 /**
@@ -16,10 +18,13 @@ public class InfoFragment extends Fragment {
     public static final String TAG = "InfoFragment.TAG";
 
     TextView songTitle, artist;
+    SeekBar seekBar;
+    ImageView albumImageView;
     private InfoListener mListener;
 
     public interface InfoListener{
         public String currentSongTitle();
+        public int currentAlbumImage();
     }
 
     public InfoFragment(){
@@ -42,6 +47,8 @@ public class InfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_info, container, false);
         songTitle = (TextView)rootView.findViewById(R.id.songTxt);
         artist = (TextView)rootView.findViewById(R.id.artistTxt);
+        seekBar = (SeekBar)rootView.findViewById(R.id.seekBar);
+        albumImageView = (ImageView)rootView.findViewById(R.id.imageView);
 
         return rootView;
     }
@@ -53,7 +60,7 @@ public class InfoFragment extends Fragment {
 //            songTitle.setText(mListener.currentSongTitle());
 //            artist.setText("Matthew Corbett & Mike Wilkie");
 //        }
-
+        albumImageView.setImageResource(mListener.currentAlbumImage());
         songTitle.setText(mListener.currentSongTitle());
         artist.setText("Matthew Corbett & Mike Wilkie");
     }
