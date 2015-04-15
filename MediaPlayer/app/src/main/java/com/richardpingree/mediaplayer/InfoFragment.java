@@ -3,6 +3,7 @@ package com.richardpingree.mediaplayer;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,14 @@ public class InfoFragment extends Fragment {
     SeekBar seekBar;
     ImageView albumImageView;
     private InfoListener mListener;
+    int musicToTime, musicCurTime;
+    public Handler durationHandler = new Handler();
 
     public interface InfoListener{
         public String currentSongTitle();
         public int currentAlbumImage();
+        public int mediaDuration();
+        public int mediaCurPos();
     }
 
     public InfoFragment(){
@@ -63,5 +68,32 @@ public class InfoFragment extends Fragment {
         albumImageView.setImageResource(mListener.currentAlbumImage());
         songTitle.setText(mListener.currentSongTitle());
         artist.setText("Matthew Corbett & Mike Wilkie");
+
+        Runnable updateSeek = new Runnable() {
+            @Override
+            public void run() {
+
+                musicToTime = mListener.mediaDuration();
+                seekBar.setMax(musicToTime);
+                musicCurTime = mListener.mediaCurPos();
+                seekBar.setProgress(musicCurTime);
+                durationHandler.postDelayed(this, 1000);
+            }
+
+        };
+        durationHandler.postDelayed(updateSeek, 1000);
+
     }
+
+//    Runnable updateSeek = new Runnable() {
+//        @Override
+//        public void run() {
+//
+//            musicToTime = mListener.mediaDuration();
+//            seekBar.setMax(musicToTime);
+//            musicCurTime = mListener.mediaCurPos();
+//            seekBar.setProgress(musicCurTime);
+//        }
+//        //durationHandler.postDelayed(this, 1000);
+//    };
 }

@@ -50,6 +50,18 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
         return currentAlbum;
     }
 
+    @Override
+    public int mediaDuration() {
+        int mediaDur = mySevice.getMediaDuration();
+        return mediaDur;
+    }
+
+    @Override
+    public int mediaCurPos() {
+        int medCurPos = mySevice.getMediaCurPos();
+        return medCurPos;
+    }
+
 
     public void setSongInfo(){
         getFragmentManager().beginTransaction().replace(R.id.container1, new InfoFragment()).commit();

@@ -46,6 +46,14 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         }
     }
 
+    public int getMediaDuration(){
+        return player.getDuration();
+    }
+
+    public int getMediaCurPos(){
+        return player.getCurrentPosition();
+    }
+
     public void playerSetup(){
 
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
