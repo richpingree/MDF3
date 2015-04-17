@@ -3,10 +3,13 @@ package com.richardpingree.mediaplayer;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 /**
  * Created by Richard Pingree MDF3 1504 Week 1 on 3/31/15.
@@ -18,6 +21,7 @@ public class MainFragment extends Fragment {
     private OnButtonClickListener mListener;
 
     Button previous, stop, play, pause, next;
+    Switch suffle;
 
     public interface OnButtonClickListener{
         public void clickStop();
@@ -25,6 +29,8 @@ public class MainFragment extends Fragment {
         public void clickPlay();
         public void clickPrev();
         public void clickNext();
+        public void setShuffleTrue();
+        public void setShuffleFalse();
     }
 
     public MainFragment(){
@@ -50,6 +56,7 @@ public class MainFragment extends Fragment {
         play = (Button)rootView.findViewById(R.id.playBtn);
         pause = (Button)rootView.findViewById(R.id.pauseBtn);
         next = (Button)rootView.findViewById(R.id.nextBtn);
+        suffle = (Switch)rootView.findViewById(R.id.switch1);
 
         return rootView;
     }
@@ -102,6 +109,20 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mListener.clickNext();
+            }
+        });
+
+        suffle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked){
+                    Log.i(TAG, "switch is on");
+                    mListener.setShuffleTrue();
+                }else{
+                    mListener.setShuffleFalse();
+                    Log.i(TAG, "switch is off");
+                }
             }
         });
     }

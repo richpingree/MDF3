@@ -133,6 +133,7 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
         if(mBound == true) {
             mySevice.play();
             setSongInfo();
+
         }
     }
 
@@ -141,6 +142,7 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
         if(mBound == true) {
             mySevice.onPrev();
             setSongInfo();
+
         }
     }
 
@@ -149,7 +151,19 @@ public class MainActivity extends Activity implements ServiceConnection, MainFra
         if(mBound == true) {
             mySevice.onNext();
             setSongInfo();
+
         }
+    }
+
+    @Override
+    public void setShuffleTrue() {
+        mySevice.shuffle = true;
+
+    }
+
+    @Override
+    public void setShuffleFalse() {
+        mySevice.shuffle = false;
     }
 
 

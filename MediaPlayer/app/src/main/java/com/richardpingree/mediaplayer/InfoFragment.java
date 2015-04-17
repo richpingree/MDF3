@@ -85,15 +85,4 @@ public class InfoFragment extends Fragment {
 
     }
 
-//    Runnable updateSeek = new Runnable() {
-//        @Override
-//        public void run() {
-//
-//            musicToTime = mListener.mediaDuration();
-//            seekBar.setMax(musicToTime);
-//            musicCurTime = mListener.mediaCurPos();
-//            seekBar.setProgress(musicCurTime);
-//        }
-//        //durationHandler.postDelayed(this, 1000);
-//    };
 }

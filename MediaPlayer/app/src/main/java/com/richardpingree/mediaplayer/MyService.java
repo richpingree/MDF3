@@ -13,15 +13,19 @@ import android.os.Binder;
 import android.os.IBinder;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by Richard Pingree MDF3 1504 Week 1 on 3/31/15.
  */
 public class MyService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener{
 
+    public static final String TAG = "MyService.TAG";
+
     public MediaPlayer player;
     boolean mActivityResumed;
     boolean mPrepared;
+    boolean shuffle = false;
     int mAudioPosition = 0;
     String[] stringArray = new String[]{"/raw/bury_the_hatchet", "/raw/crescendo", "/raw/east_is_west", "/raw/feel_the_vibe", "/raw/freed", "/raw/i_gotta_be_strong"};
     String[] songNames = new String[]{"Bury the Hatchet", "Crescendo", "East is West", "Feel the Vibe", "Freed", "I Gotta be Strong"};
@@ -53,6 +57,15 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
     public int getMediaCurPos(){
         return player.getCurrentPosition();
     }
+
+    //generates a random number
+    public int randomTrack(){
+        Random r = new Random();
+        mAudioPosition = r.nextInt(stringArray.length - 0) + 0;
+        return mAudioPosition;
+    }
+
+
 
     public void playerSetup(){
 
@@ -108,8 +121,6 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
         mPrepared = true;
         player.start();
 
-
-
         String currentSong = songNames[mAudioPosition];
         Bitmap currentimage = BitmapFactory.decodeResource(getResources(), imageNames[mAudioPosition]);
         Intent nIntent = new Intent(this, MainActivity.class);
@@ -130,30 +141,60 @@ public class MyService extends Service implements MediaPlayer.OnPreparedListener
 
 
     public void onPrev(){
-        if(mAudioPosition >= 1){
+        if(shuffle == true){
+            randomTrack();
+            player.reset();
+            playerSetup();
+        }else if(shuffle == false && mAudioPosition >= 1){
             mAudioPosition--;
             player.reset();
             playerSetup();
-
         }
+        //old code before shuffle was added
+//        if(mAudioPosition >= 1){
+//            mAudioPosition--;
+//            player.reset();
+//            playerSetup();
+//
+//        }
     }
 
     public void onNext(){
-        if(mAudioPosition < stringArray.length - 1){
+        if(shuffle == true){
+            randomTrack();
+            player.reset();
+            playerSetup();
+        }else if(shuffle == false && mAudioPosition < stringArray.length - 1){
             mAudioPosition++;
             player.reset();
             playerSetup();
-
         }
+        //old code before shuffle was added
+//        if(mAudioPosition < stringArray.length - 1){
+//            mAudioPosition++;
+//            player.reset();
+//            playerSetup();
+//
+//        }
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if(mAudioPosition < stringArray.length - 1){
+        if (shuffle == true){
+            randomTrack();
+            player.reset();
+            playerSetup();
+        }else if(shuffle == false && mAudioPosition < stringArray.length - 1){
             mAudioPosition++;
             player.reset();
             playerSetup();
         }
+        //old code before shuffle was added
+//        if(mAudioPosition < stringArray.length - 1){
+//            mAudioPosition++;
+//            player.reset();
+//            playerSetup();
+//        }
     }
 
 
