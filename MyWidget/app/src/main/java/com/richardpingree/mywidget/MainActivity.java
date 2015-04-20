@@ -3,6 +3,7 @@ package com.richardpingree.mywidget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -34,9 +35,9 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
 
         mContactDataList = new ArrayList<Contact>();
 
-        mContactDataList.add(new Contact("Richard", "Pingree", "richardpingree@email.com"));
-        mContactDataList.add(new Contact("John", "Doe", "johndoe@email.com"));
-        mContactDataList.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
+//        mContactDataList.add(new Contact("Richard", "Pingree", "richardpingree@email.com"));
+//        mContactDataList.add(new Contact("John", "Doe", "johndoe@email.com"));
+//        mContactDataList.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
 
         ContactUtility.loadFile(this);
 
@@ -51,9 +52,11 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
             newContact.mLast = data.getStringExtra(ADD_CONTACT_EXTRA_LAST);
             newContact.mEmail = data.getStringExtra(ADD_CONTACT_EXTRA_EMAIL);
 
-            ContactUtility.saveFile(this, newContact);
+            //ContactUtility.saveFile(this, newContact);
 
             mContactDataList.add(newContact);
+
+            Log.i(TAG, newContact.toString());
 
 
 
