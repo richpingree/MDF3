@@ -10,8 +10,17 @@ import com.richardpingree.mywidget.fragments.MainFragment;
 
 import java.util.ArrayList;
 
-
+/**
+ * Created by Richard Pingree MDF3 1504 Week 3 on 4/20/15.
+ */
 public class MainActivity extends Activity implements MainFragment.ContactListener{
+
+    private static final String TAG = "MainActivity";
+
+    private static final  int ADD_REQUEST = 1;
+    public static String ADD_CONTACT_EXTRA_FIRST = "First Name";
+    public static String ADD_CONTACT_EXTRA_LAST = "Last Name";
+    public static String ADD_CONTACT_EXTRA_EMAIL = "Email Address";
 
     public Contact newContact;
     public ArrayList<Contact> mContactDataList;
@@ -31,6 +40,31 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK && requestCode == ADD_REQUEST){
+            newContact = new Contact();
+
+            newContact.mFirst = data.getStringExtra(ADD_CONTACT_EXTRA_FIRST);
+            newContact.mLast = data.getStringExtra(ADD_CONTACT_EXTRA_LAST);
+            newContact.mEmail = data.getStringExtra(ADD_CONTACT_EXTRA_EMAIL);
+
+            mContactDataList.add(newContact);
+
+            MainFragment mf = (MainFragment)getFragmentManager().findFragmentById(R.id.container);
+            try{
+                mf.updateList();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void addContact(){
+        Intent addIntent = new Intent(this, FormActivity.class);
+        startActivityForResult(addIntent, ADD_REQUEST);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -45,7 +79,8 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            addContact();
             return true;
         }
 
