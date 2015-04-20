@@ -37,6 +37,9 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
         mContactDataList.add(new Contact("Richard", "Pingree", "richardpingree@email.com"));
         mContactDataList.add(new Contact("John", "Doe", "johndoe@email.com"));
         mContactDataList.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
+
+        ContactUtility.loadFile(this);
+
     }
 
     @Override
@@ -48,7 +51,11 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
             newContact.mLast = data.getStringExtra(ADD_CONTACT_EXTRA_LAST);
             newContact.mEmail = data.getStringExtra(ADD_CONTACT_EXTRA_EMAIL);
 
+            ContactUtility.saveFile(this, newContact);
+
             mContactDataList.add(newContact);
+
+
 
             MainFragment mf = (MainFragment)getFragmentManager().findFragmentById(R.id.container);
             try{
