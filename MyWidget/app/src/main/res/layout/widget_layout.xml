@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/background_dark"
+    android:weightSum="1">
+
+    <ListView android:id="@+id/contact_list"
+        android:layout_width="fill_parent"
+        android:layout_height="233dp"
+        android:layout_weight="0.09"
+        android:background="#ff33a653"/>
+
+    <TextView android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/empty"
+        android:textColor="#000000"/>
+
+</LinearLayout>

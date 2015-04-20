@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">MyWidget</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="empty">No Data</string>
+    <string name="first">First Name:</string>
+    <string name="last">Last Name:</string>
+    <string name="email">Email Address:</string>
+
     <string name="action_settings">Settings</string>
 </resources>
