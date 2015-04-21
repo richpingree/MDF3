@@ -19,9 +19,9 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
     private static final String TAG = "MainActivity";
 
     private static final  int ADD_REQUEST = 1;
-    public static String ADD_CONTACT_EXTRA_FIRST = "First Name";
-    public static String ADD_CONTACT_EXTRA_LAST = "Last Name";
-    public static String ADD_CONTACT_EXTRA_EMAIL = "Email Address";
+    public static final String ADD_CONTACT_EXTRA_FIRST = "First Name";
+    public static final String ADD_CONTACT_EXTRA_LAST = "Last Name";
+    public static final String ADD_CONTACT_EXTRA_EMAIL = "Email Address";
 
     public Contact newContact;
     public ArrayList<Contact> mContactDataList;
