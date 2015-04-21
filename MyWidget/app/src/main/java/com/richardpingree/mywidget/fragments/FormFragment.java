@@ -77,7 +77,10 @@ public class FormFragment extends Fragment {
                 newContact.mLast = last.getText().toString();
                 newContact.mEmail = email.getText().toString();
 
+               //ContactUtility.saveFile(getActivity(), newContact);
+
                 mListener.addContact(newContact);
+
                 break;
             default:
                 break;
