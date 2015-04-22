@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
 
         ContactUtility.loadFile(this);
 
+
     }
 
     @Override
@@ -57,12 +58,12 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
             mContactDataList.add(newContact);
 
             Log.i(TAG, newContact.toString());
-            if(newContact != null){
-                ContactUtility.saveFile(this, newContact);
-                Log.i(TAG, "data saved");
-            }else{
-                Log.i(TAG, "data is null");
-            }
+//            if(newContact != null){
+//                ContactUtility.saveFile(this, newContact);
+//                Log.i(TAG, "data saved");
+//            }else{
+//                Log.i(TAG, "data is null");
+//            }
 
 
 

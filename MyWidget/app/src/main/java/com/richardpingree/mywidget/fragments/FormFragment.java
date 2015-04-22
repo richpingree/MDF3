@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.richardpingree.mywidget.Contact;
+import com.richardpingree.mywidget.ContactUtility;
 import com.richardpingree.mywidget.R;
 
 /**
@@ -77,7 +78,7 @@ public class FormFragment extends Fragment {
                 newContact.mLast = last.getText().toString();
                 newContact.mEmail = email.getText().toString();
 
-               //ContactUtility.saveFile(getActivity(), newContact);
+               ContactUtility.saveFile(getActivity(), newContact);
 
                 mListener.addContact(newContact);
 

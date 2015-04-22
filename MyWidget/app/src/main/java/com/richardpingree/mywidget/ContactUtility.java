@@ -1,6 +1,7 @@
 package com.richardpingree.mywidget;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,14 +33,18 @@ public class ContactUtility {
     public static ArrayList<Contact> loadFile(Context context){
         ArrayList<Contact> contactArrayList = null;
         try{
-            FileInputStream fis = new FileInputStream("contacts");
+            FileInputStream fis = context.openFileInput("contacts");
             ObjectInputStream ois = new ObjectInputStream(fis);
             contactArrayList = (ArrayList<Contact>) ois.readObject();
             ois.close();
+            if(contactArrayList == null){
+                contactArrayList = new ArrayList<Contact>();
+            }
 
             return contactArrayList;
         }catch (Exception e){
             e.printStackTrace();
+            Log.i("ContactUtility", "error with loading");
             return null;
         }
     }
