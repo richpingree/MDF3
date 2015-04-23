@@ -40,11 +40,12 @@ public class ContactUtility {
             ObjectInputStream ois = new ObjectInputStream(fis);
             contactArrayList = (ArrayList<Contact>) ois.readObject();
             ois.close();
-//            if(contactArrayList == null){
-//                contactArrayList = new ArrayList<Contact>();
-//            }
-
-            return contactArrayList;
+            if(contactArrayList == null){
+                contactArrayList = new ArrayList<Contact>();
+                return contactArrayList;
+            }else {
+                return contactArrayList;
+            }
         }catch (Exception e){
             e.printStackTrace();
             Log.i("ContactUtility", "error with loading");

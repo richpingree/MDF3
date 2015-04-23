@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
 //        mContactDataList.add(new Contact("Richard", "Pingree", "richardpingree@email.com"));
 //        mContactDataList.add(new Contact("John", "Doe", "johndoe@email.com"));
 //        mContactDataList.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
-        
+
         ContactUtility.loadFile(this);
 
 
