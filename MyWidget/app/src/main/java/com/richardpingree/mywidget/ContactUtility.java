@@ -17,6 +17,9 @@ public class ContactUtility {
     public static void saveFile(Context context, Contact contact){
 
         ArrayList<Contact> contactArrayList = loadFile(context);
+        if(contactArrayList == null){
+            contactArrayList = new ArrayList<Contact>();
+        }
 
         contactArrayList.add(contact);
 
@@ -37,9 +40,9 @@ public class ContactUtility {
             ObjectInputStream ois = new ObjectInputStream(fis);
             contactArrayList = (ArrayList<Contact>) ois.readObject();
             ois.close();
-            if(contactArrayList == null){
-                contactArrayList = new ArrayList<Contact>();
-            }
+//            if(contactArrayList == null){
+//                contactArrayList = new ArrayList<Contact>();
+//            }
 
             return contactArrayList;
         }catch (Exception e){

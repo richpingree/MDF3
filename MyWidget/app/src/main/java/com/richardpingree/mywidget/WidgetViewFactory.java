@@ -24,13 +24,14 @@ public class WidgetViewFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public void onCreate() {
-        mContact.add(new Contact("Richard", "Pingree", "richpingree@email.com"));
-        mContact.add(new Contact("John", "Doe", "johndoe@email.com"));
-        mContact.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
+//        mContact.add(new Contact("Richard", "Pingree", "richpingree@email.com"));
+//        mContact.add(new Contact("John", "Doe", "johndoe@email.com"));
+//        mContact.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
     }
 
     @Override
     public void onDataSetChanged() {
+
 
     }
 
