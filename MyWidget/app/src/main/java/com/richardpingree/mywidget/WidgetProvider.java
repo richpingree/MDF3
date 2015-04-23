@@ -14,6 +14,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
     public static final String ACTION_VIEW_DETAILS = "com.richardpingree.android.ACTION_VIEW_DETAILS";
     public static final String EXTRA_ITEM = "com.richardpingree.android.WidgetProvider.EXTRA_ITEM";
+    public static final String ACTION_FORM = "com.richardpingree.android.ACTION_FORM";
 
 
     @Override
@@ -34,7 +35,17 @@ public class WidgetProvider extends AppWidgetProvider {
             PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, detailIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             widgetView.setPendingIntentTemplate(R.id.contact_list, pIntent);
 
+//            Intent formIntent = new Intent(ACTION_FORM);
+//            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, formIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//            widgetView.setOnClickPendingIntent(R.id.button, pendingIntent);
+
+            Intent formIntent = new Intent(context, FormActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, formIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            widgetView.setOnClickPendingIntent(R.id.button, pendingIntent);
+
+
             appWidgetManager.updateAppWidget(widgetId, widgetView);
+
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
@@ -50,6 +61,11 @@ public class WidgetProvider extends AppWidgetProvider {
                 details.putExtra(DetailActivity.EXTRA_ITEM, contact);
                 context.startActivity(details);
             }
+//            else if(intent.getAction().equals(ACTION_FORM)){
+//                Intent form = new Intent(context, FormActivity.class);
+//                form.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(form);
+//            }
         }
         super.onReceive(context, intent);
     }

@@ -38,8 +38,11 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
 //        mContactDataList.add(new Contact("Richard", "Pingree", "richardpingree@email.com"));
 //        mContactDataList.add(new Contact("John", "Doe", "johndoe@email.com"));
 //        mContactDataList.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
+        if(ContactUtility.loadFile(this) != null){
+            mContactDataList = ContactUtility.loadFile(this);
+        }
 
-        ContactUtility.loadFile(this);
+
 
 
     }
@@ -52,8 +55,6 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
             newContact.mFirst = data.getStringExtra(ADD_CONTACT_EXTRA_FIRST);
             newContact.mLast = data.getStringExtra(ADD_CONTACT_EXTRA_LAST);
             newContact.mEmail = data.getStringExtra(ADD_CONTACT_EXTRA_EMAIL);
-
-            //ContactUtility.saveFile(this, newContact);
 
             mContactDataList.add(newContact);
 
