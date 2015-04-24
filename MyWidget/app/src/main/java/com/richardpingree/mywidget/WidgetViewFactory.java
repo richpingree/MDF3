@@ -1,7 +1,5 @@
 package com.richardpingree.mywidget;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
@@ -26,7 +24,11 @@ public class WidgetViewFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public void onCreate() {
-        mContact = ContactUtility.loadFile(mContext);
+        if(ContactUtility.loadFile(mContext)!= null) {
+            mContact = ContactUtility.loadFile(mContext);
+        }else{
+            mContact.clear();
+        }
 //        mContact.add(new Contact("Richard", "Pingree", "richpingree@email.com"));
 //        mContact.add(new Contact("John", "Doe", "johndoe@email.com"));
 //        mContact.add(new Contact("Steve", "Jobs", "stevejobs@email.com"));
@@ -34,10 +36,14 @@ public class WidgetViewFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public void onDataSetChanged() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class));
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.contact_list);
-
+//        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+//        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class));
+//        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.contact_list);
+        if(ContactUtility.loadFile(mContext) != null) {
+            mContact = ContactUtility.loadFile(mContext);
+        }else{
+            mContact.clear();
+        }
     }
 
     @Override

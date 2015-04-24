@@ -1,6 +1,8 @@
 package com.richardpingree.mywidget;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,8 +33,6 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
-
         mContactDataList = new ArrayList<Contact>();
 
 //        mContactDataList.add(new Contact("Richard", "Pingree", "richardpingree@email.com"));
@@ -41,9 +41,10 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
         if(ContactUtility.loadFile(this) != null){
             mContactDataList = ContactUtility.loadFile(this);
         }
+        widgetUpdater();
 
 
-
+        getFragmentManager().beginTransaction().replace(R.id.container, new MainFragment()).commit();
 
     }
 
@@ -71,6 +72,7 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
             MainFragment mf = (MainFragment)getFragmentManager().findFragmentById(R.id.container);
             try{
                 mf.updateList();
+                widgetUpdater();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -115,5 +117,13 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
         Intent detailIntent = new Intent(this, DetailActivity.class);
         detailIntent.putExtra(DetailActivity.EXTRA_ITEM, mContactDataList.get(position));
         startActivity(detailIntent);
+    }
+
+    public void widgetUpdater(){
+        AppWidgetManager wm = AppWidgetManager.getInstance(getApplicationContext());
+        int [] widgetID = wm.getAppWidgetIds(new ComponentName(getApplicationContext(), WidgetProvider.class));
+        if (widgetID.length > 0){
+            new WidgetProvider().onUpdate(getApplicationContext(), wm, widgetID);
+        }
     }
 }
