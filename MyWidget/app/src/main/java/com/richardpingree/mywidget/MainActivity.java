@@ -62,13 +62,11 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
             Log.i(TAG, newContact.toString());
             if(newContact != null){
                 ContactUtility.saveFile(this, newContact);
-                Log.i(TAG, "data saved");
+                //Log.i(TAG, "data saved");
             }else{
-                Log.i(TAG, "data is null");
+                //Log.i(TAG, "data is null");
             }
-
-
-
+            
             MainFragment mf = (MainFragment)getFragmentManager().findFragmentById(R.id.container);
             try{
                 mf.updateList();
