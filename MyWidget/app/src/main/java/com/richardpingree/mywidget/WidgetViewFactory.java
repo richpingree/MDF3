@@ -36,9 +36,7 @@ public class WidgetViewFactory implements RemoteViewsService.RemoteViewsFactory 
 
     @Override
     public void onDataSetChanged() {
-//        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-//        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, WidgetProvider.class));
-//        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.contact_list);
+
         if(ContactUtility.loadFile(mContext) != null) {
             mContact = ContactUtility.loadFile(mContext);
         }else{
