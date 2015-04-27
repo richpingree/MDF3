@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements MainFragment.ContactListen
             }else{
                 //Log.i(TAG, "data is null");
             }
-            
+
             MainFragment mf = (MainFragment)getFragmentManager().findFragmentById(R.id.container);
             try{
                 mf.updateList();
