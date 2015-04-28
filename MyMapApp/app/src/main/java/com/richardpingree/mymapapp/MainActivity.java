@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.richardpingree.mymapapp.fragments.MyMapFragment;
+
 
 public class MainActivity extends Activity {
 
@@ -12,6 +14,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MyMapFragment frag = new MyMapFragment();
+        getFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
     }
 
     @Override
