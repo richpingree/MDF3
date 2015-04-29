@@ -32,9 +32,11 @@
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDR1I0KClD9hEayOrhHt1EDlxvXTs2s-64"/>
 
-        <activity android:name=".DetailActivity"/>
+        <activity android:name=".DetailActivity"
+            android:label="Details"/>
 
-        <activity android:name=".FormActivity"/>
+        <activity android:name=".FormActivity"
+            android:label="Form"/>
 
     </application>
 

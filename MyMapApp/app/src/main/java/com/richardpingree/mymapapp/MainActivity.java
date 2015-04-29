@@ -1,6 +1,7 @@
 package com.richardpingree.mymapapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,8 @@ import com.richardpingree.mymapapp.fragments.MyMapFragment;
  */
 public class MainActivity extends Activity {
 
+    private static final int ADD_BTN_REQUEST = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,11 @@ public class MainActivity extends Activity {
 
         MyMapFragment frag = new MyMapFragment();
         getFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
+    }
+
+    public void addBtnMethod(){
+        Intent addBtnIntent = new Intent(this, FormActivity.class);
+        startActivityForResult(addBtnIntent, ADD_BTN_REQUEST);
     }
 
     @Override
@@ -36,7 +44,8 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            addBtnMethod();
             return true;
         }
 
