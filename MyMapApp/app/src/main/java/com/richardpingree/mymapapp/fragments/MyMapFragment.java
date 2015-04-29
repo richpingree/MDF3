@@ -1,6 +1,8 @@
 package com.richardpingree.mymapapp.fragments;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.richardpingree.mymapapp.DetailActivity;
 
 /**
  * Created by Richard Pingree MDF3 1504 Week 4 on 4/27/15.
@@ -39,7 +42,13 @@ public class MyMapFragment extends MapFragment implements OnInfoWindowClickListe
                 .setTitle("Marker Clicked")
                 .setMessage("You Clicked on: " + marker.getTitle())
                 .setPositiveButton("Close", null)
-                .setNegativeButton("Details", null)
+                .setNegativeButton("Details", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+                        startActivity(detailIntent);
+                    }
+                })
                 .show();
     }
 

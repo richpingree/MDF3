@@ -7,7 +7,9 @@ import android.view.MenuItem;
 
 import com.richardpingree.mymapapp.fragments.MyMapFragment;
 
-
+/**
+ * Created by Richard Pingree MDF3 1504 Week 4 on 4/27/15.
+ */
 public class MainActivity extends Activity {
 
     @Override
