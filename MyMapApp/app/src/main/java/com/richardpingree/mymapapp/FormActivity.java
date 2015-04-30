@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.richardpingree.mymapapp.fragments.FormFragment;
 
@@ -50,15 +48,4 @@ public class FormActivity extends Activity implements FormFragment.FormListener{
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.clear();
-        getMenuInflater().inflate(R.menu.menu_form, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 }

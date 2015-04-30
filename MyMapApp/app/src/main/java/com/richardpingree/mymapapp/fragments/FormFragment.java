@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +25,7 @@ public class FormFragment extends Fragment {
     public EditText title, notes;
     public ImageView image;
     public TextView latitude, longitude;
+    public Button save, camera;
     public Uri imageUri;
 
     private FormListener mListener;
@@ -68,6 +67,22 @@ public class FormFragment extends Fragment {
         image = (ImageView)getView().findViewById(R.id.image);
         latitude = (TextView)getView().findViewById(R.id.latitude);
         longitude = (TextView)getView().findViewById(R.id.longitude);
+        save = (Button)getView().findViewById(R.id.saveButton);
+        camera = (Button)getView().findViewById(R.id.cameraButton);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Form", "Save Button Clicked");
+            }
+        });
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Form", "Camera Button Clicked");
+            }
+        });
 
 
         latitude.setText("Latitude: " + String.valueOf(mListener.getLat()));
@@ -75,21 +90,4 @@ public class FormFragment extends Fragment {
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_save:
-                Log.i("Form", "Save Button");
-                break;
-            case R.id.action_camera:
-                Log.i("Form", "Camera Button");
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
