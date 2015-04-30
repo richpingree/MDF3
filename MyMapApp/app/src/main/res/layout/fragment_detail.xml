@@ -3,4 +3,37 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:id="@+id/titleTxt"
+                android:text="Sample Title"/>
+        </TableRow>
+
+        <TableRow android:padding="10dp">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:id="@+id/noteTxt"
+            android:text="Sample Note"/>
+        </TableRow>
+
+
+        <TableRow android:padding="10dp">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:id="@+id/LatLongTxt"
+                android:text="Sample Text"/>
+        </TableRow>
+
+
+
+    </TableLayout>
+
 </LinearLayout>

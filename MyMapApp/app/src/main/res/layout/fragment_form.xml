@@ -9,11 +9,11 @@
         android:layout_height="wrap_content">
 
         <TableRow android:padding="10dp">
-            <EditText
-                android:layout_height="wrap_content"
-                android:layout_weight="100"
-                android:hint="Title"
-                android:id="@+id/title"/>
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:hint="Title"
+            android:id="@+id/title"/>
         </TableRow>
 
         <TableRow android:padding="10dp">

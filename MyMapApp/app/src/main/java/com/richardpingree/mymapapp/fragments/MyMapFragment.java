@@ -99,6 +99,9 @@ public class MyMapFragment extends MapFragment implements OnInfoWindowClickListe
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
+                        detailIntent.putExtra(DetailActivity.TITLE_EXTRA, marker.getTitle());
+                        detailIntent.putExtra(DetailActivity.NOTE_EXTRA, marker.getSnippet());
+                        detailIntent.putExtra(DetailActivity.LATLONG_EXTRA, marker.getPosition());
                         startActivity(detailIntent);
                     }
                 })
