@@ -15,19 +15,26 @@ import android.view.MenuItem;
 
 import com.richardpingree.mymapapp.fragments.MyMapFragment;
 
+import java.util.ArrayList;
+
 /**
  * Created by Richard Pingree MDF3 1504 Week 4 on 4/27/15.
  */
-public class MainActivity extends Activity implements LocationListener{
+public class MainActivity extends Activity implements LocationListener, MyMapFragment.MapListener{
 
     private static final int REQUEST_ENABLE_GPS = 0;
     private static final int ADD_BTN_REQUEST = 1;
-    private static final String ADD_LAT = "Latitude";
-    private static final String ADD_LONG = "Longitude";
+    public static final int ADD_REQUEST = 2;
+
+    public static final String ADD_OBJECT_EXTRA_TITLE = "Title";
+    public static final String ADD_OBJECT_EXTRA_NOTE = "Note";
+    public static final String ADD_OBJECT_EXTRA_LAT = "Lat";
+    public static final String ADD_OBJECT_EXTRA_LONG = "Long";
 
 
-    double latitude;
-    double longitude;
+    Double latitude, longitude;
+    public CustomObject newObject;
+    public ArrayList<CustomObject> mObjectDataList;
 
     LocationManager mManager;
 
@@ -37,7 +44,16 @@ public class MainActivity extends Activity implements LocationListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mObjectDataList = new ArrayList<CustomObject>();
+//            mObjectDataList.add(new CustomObject("IHop", "Food", 37.423752, -122.084170));
+//            mObjectDataList.add(new CustomObject("Friday's", "Food", 37.421690, -122.080673));
         mManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+
+        enableGPS();
+
+        if(FileUtility.loadFile(this) != null){
+            mObjectDataList = FileUtility.loadFile(this);
+        }
 
         MyMapFragment frag = new MyMapFragment();
         getFragmentManager().beginTransaction().replace(R.id.container, frag).commit();
@@ -78,6 +94,8 @@ public class MainActivity extends Activity implements LocationListener{
         enableGPS();
     }
 
+
+
     @Override
     public void onLocationChanged(Location location) {
         latitude = location.getLatitude();
@@ -102,7 +120,35 @@ public class MainActivity extends Activity implements LocationListener{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        enableGPS();
+
+        if(resultCode == Activity.RESULT_OK && requestCode == ADD_BTN_REQUEST){
+            newObject = new CustomObject();
+
+            newObject.mTitle = data.getStringExtra(ADD_OBJECT_EXTRA_TITLE);
+            newObject.mNote = data.getStringExtra(ADD_OBJECT_EXTRA_NOTE);
+            newObject.mLatitude = data.getDoubleExtra(ADD_OBJECT_EXTRA_LAT, 0);
+            newObject.mLongitude = data.getDoubleExtra(ADD_OBJECT_EXTRA_LONG, 0);
+
+
+            mObjectDataList.add(newObject);
+
+
+
+
+        }else if(resultCode == Activity.RESULT_OK && requestCode == ADD_REQUEST){
+            newObject = new CustomObject();
+
+            newObject.mTitle = data.getStringExtra(ADD_OBJECT_EXTRA_TITLE);
+            newObject.mNote = data.getStringExtra(ADD_OBJECT_EXTRA_NOTE);
+            newObject.mLatitude = data.getDoubleExtra(ADD_OBJECT_EXTRA_LAT, 0);
+            newObject.mLongitude = data.getDoubleExtra(ADD_OBJECT_EXTRA_LONG, 0);
+
+
+            mObjectDataList.add(newObject);
+
+
+        }
+
     }
 
     public void addBtnMethod(){
@@ -137,4 +183,18 @@ public class MainActivity extends Activity implements LocationListener{
     }
 
 
+    @Override
+    public Double getLat() {
+        return latitude;
+    }
+
+    @Override
+    public Double getLong() {
+        return longitude;
+    }
+
+    @Override
+    public ArrayList<CustomObject> getObjects() {
+        return mObjectDataList;
+    }
 }

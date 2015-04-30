@@ -48,4 +48,17 @@ public class FormActivity extends Activity implements FormFragment.FormListener{
 
     }
 
+    @Override
+    public void addObject(CustomObject newObject) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(MainActivity.ADD_OBJECT_EXTRA_TITLE, newObject.mTitle);
+        returnIntent.putExtra(MainActivity.ADD_OBJECT_EXTRA_NOTE, newObject.mNote);
+        returnIntent.putExtra(MainActivity.ADD_OBJECT_EXTRA_LAT, newObject.mLatitude);
+        returnIntent.putExtra(MainActivity.ADD_OBJECT_EXTRA_LONG, newObject.mLongitude);
+        setResult(RESULT_OK, returnIntent);
+        finish();
+
+    }
+
+
 }

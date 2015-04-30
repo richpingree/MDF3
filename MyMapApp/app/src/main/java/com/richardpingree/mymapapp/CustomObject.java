@@ -73,4 +73,9 @@ public class CustomObject implements Serializable{
     public void setmLongitude(){
         this.mLongitude = mLongitude;
     }
+
+    @Override
+    public String toString() {
+        return mTitle + mNote + String.valueOf(mLatitude) + String.valueOf(mLongitude);
+    }
 }

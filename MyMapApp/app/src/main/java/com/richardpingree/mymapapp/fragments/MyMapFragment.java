@@ -1,5 +1,6 @@
 package com.richardpingree.mymapapp.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,25 +15,77 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.richardpingree.mymapapp.CustomObject;
 import com.richardpingree.mymapapp.DetailActivity;
+import com.richardpingree.mymapapp.FormActivity;
+import com.richardpingree.mymapapp.MainActivity;
+
+import java.util.ArrayList;
 
 /**
  * Created by Richard Pingree MDF3 1504 Week 4 on 4/27/15.
  */
-public class MyMapFragment extends MapFragment implements OnInfoWindowClickListener {
+public class MyMapFragment extends MapFragment implements OnInfoWindowClickListener{
 
     GoogleMap mMap;
+    Double mLat = 0.00;
+    Double mLong = 0.00;
+
+    private MapListener mListener;
+    private ArrayList<CustomObject> mObjectList;
+
+
+    public interface MapListener{
+        public Double getLat();
+        public Double getLong();
+        public ArrayList<CustomObject> getObjects();
+   }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof MapListener){
+            mListener = (MapListener) activity;
+        }else{
+            throw new IllegalArgumentException("Containing activity must implement MapListener interface");
+        }
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mObjectList = mListener.getObjects();
+
+        mLat = mListener.getLat();
+        mLong = mListener.getLong();
+
+
         mMap = getMap();
-        mMap.addMarker(new MarkerOptions().position(new LatLng(28.590647, -81.304510)).title("MDVBS Faculty Offices"));
+        for(int i = 0; i < mObjectList.size(); i++){
+            CustomObject currentObject = mObjectList.get(i);
+            Marker cMarker;
+            cMarker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(currentObject.mLatitude, currentObject.mLongitude))
+                    .title(currentObject.mTitle)
+                    .snippet(currentObject.mNote));
+                    cMarker.showInfoWindow();
+        }
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(28.590647, -81.304510)).title("MDVBS Faculty Offices"));
 
         mMap.setInfoWindowAdapter(new MarkerAdapter());
         mMap.setOnInfoWindowClickListener(this);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(28.593770, -81.303797), 16));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLat, mLong), 16));
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                Intent addIntent = new Intent(getActivity(), FormActivity.class);
+                addIntent.putExtra(FormActivity.GETLAT, latLng.latitude);
+                addIntent.putExtra(FormActivity.GETLONG, latLng.longitude);
+                startActivityForResult(addIntent, MainActivity.ADD_REQUEST);
+
+            }
+        });
     }
 
     @Override
@@ -52,6 +105,9 @@ public class MyMapFragment extends MapFragment implements OnInfoWindowClickListe
                 .show();
     }
 
+
+
+
     private class MarkerAdapter implements GoogleMap.InfoWindowAdapter{
         TextView mText;
 
@@ -66,7 +122,8 @@ public class MyMapFragment extends MapFragment implements OnInfoWindowClickListe
 
         @Override
         public View getInfoContents(Marker marker) {
-            mText.setText(marker.getTitle());
+            mText.setText(marker.getTitle() + " " + marker.getSnippet());
+
             return mText;
         }
     }
