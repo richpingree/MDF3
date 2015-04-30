@@ -11,7 +11,7 @@ public class CustomObject implements Serializable{
 
     public String mTitle;
     public String mNote;
-    public String mImageName;
+    //public String mImageName;
     public Double mLatitude;
     public Double mLongitude;
 
@@ -19,12 +19,19 @@ public class CustomObject implements Serializable{
 
     }
 
-    public CustomObject(String title, String note, String imageName, Double latitude, Double longitude){
+//    public CustomObject(String title, String note, String imageName, Double latitude, Double longitude){
+//        mTitle = title;
+//        mNote = note;
+//        mImageName = imageName;
+//        mLatitude = latitude;
+//        mLongitude = longitude;
+//    }
+
+    public CustomObject(String title, String note, Double latitude, Double longitude){
         mTitle = title;
         mNote = note;
-        mImageName = imageName;
         mLatitude = latitude;
-        mLongitude = longitude;
+        mLongitude =longitude;
     }
 
     public String getmTitle(){
@@ -43,13 +50,13 @@ public class CustomObject implements Serializable{
         this.mNote = mNote;
     }
 
-    public String getImageName(){
-        return mImageName;
-    }
-
-    public void setmImageName(){
-        this.mImageName = mImageName;
-    }
+//    public String getImageName(){
+//        return mImageName;
+//    }
+//
+//    public void setmImageName(){
+//        this.mImageName = mImageName;
+//    }
 
     public Double getmLatitude(){
         return mLatitude;
