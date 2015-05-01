@@ -197,4 +197,13 @@ public class MainActivity extends Activity implements LocationListener, MyMapFra
     public ArrayList<CustomObject> getObjects() {
         return mObjectDataList;
     }
+
+//    @Override
+//    public void viewObject(int position) {
+//        Intent detailIntent = new Intent(this, DetailActivity.class);
+//        detailIntent.putExtra(DetailActivity.EXTRA_OBJECT, mObjectDataList.get(position));
+//        startActivity(detailIntent);
+//
+//
+//    }
 }

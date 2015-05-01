@@ -39,6 +39,7 @@ public class MyMapFragment extends MapFragment implements OnInfoWindowClickListe
         public Double getLat();
         public Double getLong();
         public ArrayList<CustomObject> getObjects();
+//        public void viewObject(int position);
    }
 
     @Override
@@ -62,6 +63,7 @@ public class MyMapFragment extends MapFragment implements OnInfoWindowClickListe
 
 
         mMap = getMap();
+
         for(int i = 0; i < mObjectList.size(); i++){
             CustomObject currentObject = mObjectList.get(i);
             Marker cMarker;
@@ -98,6 +100,7 @@ public class MyMapFragment extends MapFragment implements OnInfoWindowClickListe
                 .setNegativeButton("Details", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
                         detailIntent.putExtra(DetailActivity.TITLE_EXTRA, marker.getTitle());
                         detailIntent.putExtra(DetailActivity.NOTE_EXTRA, marker.getSnippet());

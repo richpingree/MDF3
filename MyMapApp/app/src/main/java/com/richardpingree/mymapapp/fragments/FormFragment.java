@@ -122,46 +122,12 @@ public class FormFragment extends Fragment {
     }
 
 
-//    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//
-//        title = (EditText)getView().findViewById(R.id.title);
-//        notes = (EditText)getView().findViewById(R.id.notes);
-//        imageView = (ImageView)getView().findViewById(R.id.image);
-//        latitude = (TextView)getView().findViewById(R.id.latitude);
-//        longitude = (TextView)getView().findViewById(R.id.longitude);
-//        save = (Button)getView().findViewById(R.id.saveButton);
-//        camera = (Button)getView().findViewById(R.id.cameraButton);
-//
-//        save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i("Form", "Save Button Clicked");
-//            }
-//        });
-//
-//        camera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i("Form", "Camera Button Clicked");
-//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mListener.getOutputUri());
-//                startActivityForResult(cameraIntent, REQUEST_TAKE_PICTURE);
-//
-//            }
-//        });
-//
-//
-//        latitude.setText("Latitude: " + String.valueOf(mListener.getLat()));
-//        longitude.setText("Longitude: " + String.valueOf(mListener.getLong()));
-//
-//    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_TAKE_PICTURE && requestCode != Activity.RESULT_CANCELED){
-            if (data != null){
+            if (imageUri != null){
                 imageView.setImageBitmap(BitmapFactory.decodeFile(imageUri.getPath()));
 
                 addToGallary(imageUri);
